@@ -1,8 +1,7 @@
-# 🛫 Kotlin Template
+# 🚰🐘 Tube Gradle Plugin
 
-Starter project with [Gradle](https://gradle.org/), [Kotlin](https://kotlinlang.org/) and [Spek](http://spekframework.org/) pre-configured.
+Sets up tasks for [Tube](https://github.com/phatblat/Tube) stages.
 
 # 📄 License
 
 This repo is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for rights and limitations.
-

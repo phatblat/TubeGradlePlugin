@@ -1,10 +1,14 @@
 /*
- * build.gradld.kts
- * KotlinTemplate
+ * build.gradle.kts
+ * TubeGradlePlugin
  */
 
 import org.gradle.api.JavaVersion.*
 import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.include
+import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.extra
+import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.repositories
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.junit.platform.console.options.Details
 import org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns
