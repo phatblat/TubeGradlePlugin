@@ -4,6 +4,9 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 class TubePlugin: Plugin<Project> {
-    override fun apply(project: Project?) {
+    lateinit var project: Project
+    override fun apply(nullableProject: Project?) {
+        project = nullableProject ?: return
+        project.tasks.create("codeQuality")
     }
 }
