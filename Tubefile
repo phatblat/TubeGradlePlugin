@@ -1,0 +1,11 @@
+#!/usr/bin/env groovy
+/*
+ * Tubefile
+ * Tube Gradle Plugin
+ *
+ * https://github.com/phatblat/Tube
+ */
+
+@Library("Tube") _
+
+tube {}
