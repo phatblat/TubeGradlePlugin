@@ -7,12 +7,15 @@
 // 🛃 Imports
 /* -------------------------------------------------------------------------- */
 
+import java.util.Date
 import org.gradle.api.JavaVersion.*
 import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.include
 import org.gradle.kotlin.dsl.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.junit.platform.console.options.Details
 import org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns
+import org.gradle.plugin.devel.GradlePluginDevelopmentExtension
+import org.jetbrains.kotlin.preprocessor.mkdirsOrFail
 
 /* -------------------------------------------------------------------------- */
 // 🔌 Plugins
@@ -95,7 +98,11 @@ val updateVersionFile by tasks.creating {
     description = "Updates the VERSION.txt file included with the plugin"
     group = "Build"
     doLast {
-        project.file("src/main/resources/VERSION.txt").writeText(version.toString())
+        val resources = "src/main/resources"
+        project.file(resources).mkdirsOrFail()
+        val versionFile = project.file("$resources/VERSION.txt")
+        versionFile.createNewFile()
+        versionFile.writeText(version.toString())
     }
 }
 
@@ -122,7 +129,7 @@ configure<BasePluginConvention> {
     archivesBaseName = javaPackage
 }
 
-/*gradlePlugin.plugins.create(artifactName) {
+gradlePlugin.plugins.create("$artifactName") {
     id = javaPackage
     implementationClass = "$javaPackage.$pluginClass"
 }
@@ -137,8 +144,8 @@ pluginBundle {
         id = javaPackage
         displayName = "ShellExec plugin"
     }
-    mavenCoordinates.artifactId = artifactName
-}*/
+    mavenCoordinates.artifactId = "$artifactName"
+}
 
 /* -------------------------------------------------------------------------- */
 // ✅ Test
@@ -157,12 +164,12 @@ junitPlatform {
 /* -------------------------------------------------------------------------- */
 // 🚀 Deployment
 /* -------------------------------------------------------------------------- */
-/*
+
 publishing {
     (publications) {
         "mavenJava"(MavenPublication::class) {
             from(components["java"])
-            artifactId = artifactName
+            artifactId = "$artifactName"
 
             artifact(sourcesJar) { classifier = "sources" }
             artifact(javadocJar) { classifier = "javadoc" }
@@ -202,7 +209,7 @@ bintray {
             }
         }
     }
-}*/
+}
 
 val deploy by tasks.creating {
     description = "Deploys the artifact."
