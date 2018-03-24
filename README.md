@@ -1,5 +1,7 @@
 # 🚰🐘 Tube Gradle Plugin
 
+[![Tube](https://jenkins.log-g.co/buildStatus/icon?job=phatblat/TubeGradlePlugin/master)](https://jenkins.log-g.co/job/phatblat/job/TubeGradlePlugin/job/master/)
+
 Sets up tasks for [Tube](https://github.com/phatblat/Tube) stages.
 
 # 📄 License
