@@ -3,6 +3,10 @@
  * TubeGradlePlugin
  */
 
+/* -------------------------------------------------------------------------- */
+// 🛃 Imports
+/* -------------------------------------------------------------------------- */
+
 import org.gradle.api.JavaVersion.*
 import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.include
 import org.gradle.kotlin.dsl.dependencies
@@ -13,10 +17,18 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.junit.platform.console.options.Details
 import org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns
 
+/* -------------------------------------------------------------------------- */
+// 🔌 Plugins
+/* -------------------------------------------------------------------------- */
+
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.2.30"
     id("org.junit.platform.gradle.plugin") version "1.1.0"
 }
+
+/* -------------------------------------------------------------------------- */
+// 📋 Properties
+/* -------------------------------------------------------------------------- */
 
 val jvmTarget = JavaVersion.VERSION_1_8.toString()
 val spekVersion = "1.1.5"
@@ -28,6 +40,10 @@ val junitPlatformVersion: String? by extra {
             .resolvedConfiguration.firstLevelModuleDependencies
             .find { it.moduleName == "junit-platform-gradle-plugin" }?.moduleVersion
 }
+
+/* -------------------------------------------------------------------------- */
+// 👪 Dependencies
+/* -------------------------------------------------------------------------- */
 
 repositories {
     jcenter()
@@ -47,6 +63,10 @@ dependencies {
     testImplementation("org.jetbrains.spek:spek-junit-platform-engine:$spekVersion")
 }
 
+/* -------------------------------------------------------------------------- */
+// 🏗 Assemble
+/* -------------------------------------------------------------------------- */
+
 tasks.withType<JavaCompile> {
     sourceCompatibility = jvmTarget
     targetCompatibility = jvmTarget
@@ -54,6 +74,10 @@ tasks.withType<JavaCompile> {
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = jvmTarget
 }
+
+/* -------------------------------------------------------------------------- */
+// ✅ Test
+/* -------------------------------------------------------------------------- */
 
 junitPlatform {
     filters {
