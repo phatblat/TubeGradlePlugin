@@ -140,9 +140,9 @@ pluginBundle {
     description = "Exec base task alternative which runs commands in a Bash shell."
     tags = mutableListOf("gradle", "exec", "shell", "bash", "kotlin")
 
-    plugins.create("shellexec") {
+    plugins.create("$artifactName") {
         id = javaPackage
-        displayName = "ShellExec plugin"
+        displayName = "Tube plugin"
     }
     mavenCoordinates.artifactId = "$artifactName"
 }

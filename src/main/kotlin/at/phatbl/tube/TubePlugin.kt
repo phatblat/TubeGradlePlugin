@@ -1,4 +1,4 @@
-package at.phatbl.tube.gradle
+package at.phatbl.tube
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
