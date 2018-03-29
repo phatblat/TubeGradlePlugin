@@ -27,9 +27,9 @@ plugins {
     `maven-publish`
 
     // Gradle plugin portal - https://plugins.gradle.org/
+    kotlin("jvm") version "1.2.31"
     id("com.jfrog.bintray") version "1.8.0"
     id("com.gradle.plugin-publish") version "0.9.10"
-    id("org.jetbrains.kotlin.jvm") version "1.2.30"
 
     // Custom handling in pluginManagement
     id("org.junit.platform.gradle.plugin") version "1.1.0"
@@ -58,20 +58,16 @@ val junitPlatformVersion: String? by extra {
 // 👪 Dependencies
 /* -------------------------------------------------------------------------- */
 
-repositories {
-    jcenter()
-}
+repositories.jcenter()
 
 dependencies {
-    // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
-    // JUnit Platform
+    implementation(kotlin("stdlib"))
+    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("reflect"))
+
+    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit"))
     testImplementation("org.junit.platform:junit-platform-runner:$junitPlatformVersion")
-    // Spek
     testImplementation("org.jetbrains.spek:spek-api:$spekVersion")
     testImplementation("org.jetbrains.spek:spek-junit-platform-engine:$spekVersion")
 }
