@@ -8,9 +8,9 @@ rootProject.name = "TubeGradlePlugin"
 /*
  * Clone Clamp to sibling directory to build from source.
  */
-val otherProject = file("../Clamp")
-if (otherProject.exists()) {
-    includeBuild(otherProject) {
+val clamp = file("../Clamp")
+if (clamp.exists()) {
+    includeBuild(clamp) {
         dependencySubstitution {
             substitute(module("at.phatbl:clamp")).with(project(":"))
         }
