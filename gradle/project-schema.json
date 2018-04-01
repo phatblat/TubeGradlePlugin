@@ -2,7 +2,8 @@
     ":": {
         "conventions": {
             "base": "org.gradle.api.plugins.BasePluginConvention",
-            "java": "org.gradle.api.plugins.JavaPluginConvention"
+            "java": "org.gradle.api.plugins.JavaPluginConvention",
+            "maven": "org.gradle.api.plugins.MavenPluginConvention"
         },
         "configurations": [
             "annotationProcessor",
@@ -32,12 +33,12 @@
         "extensions": {
             "ext": "org.gradle.api.plugins.ExtraPropertiesExtension",
             "buildScan": "com.gradle.scan.plugin.internal.api.g",
-            "bintray": "com.jfrog.bintray.gradle.BintrayExtension",
-            "defaultArtifacts": "org.gradle.api.internal.plugins.DefaultArtifactPublicationSet",
-            "reporting": "org.gradle.api.reporting.ReportingExtension",
-            "pluginBundle": "com.gradle.publish.PluginBundleExtension",
             "kotlin": "org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension",
             "kapt": "org.jetbrains.kotlin.gradle.plugin.KaptExtension",
+            "defaultArtifacts": "org.gradle.api.internal.plugins.DefaultArtifactPublicationSet",
+            "reporting": "org.gradle.api.reporting.ReportingExtension",
+            "bintray": "com.jfrog.bintray.gradle.BintrayExtension",
+            "pluginBundle": "com.gradle.publish.PluginBundleExtension",
             "junitPlatform": "org.junit.platform.gradle.plugin.JUnitPlatformExtension",
             "gradlePlugin": "org.gradle.plugin.devel.GradlePluginDevelopmentExtension",
             "publishing": "org.gradle.api.publish.PublishingExtension"
