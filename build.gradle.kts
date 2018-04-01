@@ -24,10 +24,12 @@ import org.jetbrains.kotlin.preprocessor.mkdirsOrFail
 plugins {
     // Gradle built-in
     `java-gradle-plugin`
+    maven // only applied to make bintray happy
     `maven-publish`
 
     // Gradle plugin portal - https://plugins.gradle.org/
     kotlin("jvm") version "1.2.31"
+    id("at.phatbl.clamp") version "1.0.0"
     id("com.jfrog.bintray") version "1.8.0"
     id("com.gradle.plugin-publish") version "0.9.10"
 
@@ -42,6 +44,10 @@ plugins {
 val artifactName by project
 val javaPackage = "$group.$artifactName"
 val pluginClass by project
+val projectUrl by project
+val tags by project
+val labels = "$tags".split(",")
+val license by project
 
 val jvmTarget = JavaVersion.VERSION_1_8.toString()
 val spekVersion by project
@@ -131,14 +137,14 @@ gradlePlugin.plugins.create("$artifactName") {
 }
 
 pluginBundle {
-    website = "https://github.com/phatblat/ShellExec"
-    vcsUrl = "https://github.com/phatblat/ShellExec"
-    description = "Exec base task alternative which runs commands in a Bash shell."
-    tags = mutableListOf("gradle", "exec", "shell", "bash", "kotlin")
+    website = "$projectUrl"
+    vcsUrl = "$projectUrl"
+    description = project.description
+    tags = labels
 
     plugins.create("$artifactName") {
         id = javaPackage
-        displayName = "Tube plugin"
+        displayName = project.name
     }
     mavenCoordinates.artifactId = "$artifactName"
 }
@@ -152,7 +158,6 @@ junitPlatform {
         engines {
             include("spek")
         }
-        includeClassNamePatterns("^.*Tests?$", ".*Spec", ".*Spek")
     }
     details = Details.TREE
 }
@@ -187,18 +192,20 @@ bintray {
     dryRun = false
     publish = true
     pkg.apply {
-        repo = "maven-open-source"
-        name = "ShellExec"
-        desc = "Gradle plugin with a simpler Exec task."
-        websiteUrl = "https://github.com/phatblat/ShellExec"
-        issueTrackerUrl = "https://github.com/phatblat/ShellExec/issues"
-        vcsUrl = "https://github.com/phatblat/ShellExec.git"
+        repo = property("bintray.repo") as String
+        name = project.name
+        desc = project.description
+        websiteUrl = "$projectUrl"
+        issueTrackerUrl = "$projectUrl/issues"
+        vcsUrl = "$projectUrl.git"
+        githubRepo = "phatblat/${project.name}"
+        githubReleaseNotesFile = "CHANGELOG.md"
         setLicenses("MIT")
-        setLabels("gradle", "plugin", "exec", "shell", "bash")
+        setLabels("gradle", "plugin", "tube", "jenkins", "pipeline", "stages")
         publicDownloadNumbers = true
         version.apply {
             name = project.version.toString()
-            desc = "ShellExec Gradle Plugin ${project.version}"
+            desc = "Tube Gradle Plugin ${project.version}"
             released = Date().toString()
             vcsTag = project.version.toString()
             attributes = mapOf("gradle-plugin" to "${project.group}:$artifactName:$version")
@@ -211,6 +218,15 @@ bintray {
             }
         }
     }
+}
+
+// Workaround to eliminate warning from bintray plugin, which assumes the "maven" plugin is being used.
+// https://github.com/bintray/gradle-bintray-plugin/blob/master/src/main/groovy/com/jfrog/bintray/gradle/BintrayPlugin.groovy#L85
+val install by tasks
+install.doFirst {
+    val maven = project.convention.plugins["maven"] as MavenPluginConvention
+    maven.mavenPomDir = file("$buildDir/publications/mavenJava")
+    logger.info("Configured maven plugin to use same output dir as maven-publish: ${maven.mavenPomDir}")
 }
 
 val deploy by tasks.creating {
